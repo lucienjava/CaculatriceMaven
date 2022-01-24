@@ -34,7 +34,7 @@ pipeline {
     post {
         success {
                     junit '**/target/*-reports/*.xml'
-                    step( [ $class: 'JacocoPublisher' ] )
+                    
                     
                 }
        always {
