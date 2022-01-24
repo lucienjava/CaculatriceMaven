@@ -11,8 +11,8 @@ package fr.epsi.calculatricemaven;
  */
 public class ExceptionByZero extends Exception {
 
-    public ExceptionByZero(String division_par_zero) {
-        super (division_par_zero);
+    public ExceptionByZero(String divisionParZero) {
+        super (divisionParZero);
     }
     
 }
