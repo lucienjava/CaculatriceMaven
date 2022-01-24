@@ -33,7 +33,7 @@ pipeline {
      }
     post {
         success {
-                    junit '*/build/test-results/*.xml'
+                    junit '**/target/*-reports/*.xml'
                     step( [ $class: 'JacocoPublisher' ] )
                     
                 }
