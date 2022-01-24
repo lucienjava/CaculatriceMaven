@@ -33,9 +33,9 @@ pipeline {
      }
     post {
         success {
-                    junit '**/target/*-reports/*.xml'
-                    jacoco(execPattern: './target/jacoco.exec')
-                    archive "./target/**/*"
+                    junit '*/build/test-results/*.xml'
+                    step( [ $class: 'JacocoPublisher' ] )
+                    
                 }
        always {
           junit(
