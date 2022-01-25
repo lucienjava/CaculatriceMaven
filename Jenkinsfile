@@ -2,7 +2,7 @@ pipeline {
     agent any 
     tools {
         maven "maven383"
-        jdk "jdk11"
+        
     }
     
     stages {
