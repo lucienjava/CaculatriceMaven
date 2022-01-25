@@ -14,22 +14,16 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
                 }
         
         }
         stage('Build') {
             steps {
-                bat 'mvn package'
+                sh 'mvn package'
                 }
             
         }
-        stage('SonarQube Analysis') {
-            steps {
-                bat 'mvn clean verify sonar:sonar -Dsonar.projectKey=tuto -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f2db60c5086739c3682e78fc4e3e7ffce4a99024'
-            }
-        }
-         
         
      }
     post {
