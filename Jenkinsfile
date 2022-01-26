@@ -25,26 +25,13 @@ pipeline {
   stage('Build') {
    parallel {
     stage('Compile') {
-     agent {
-      docker {
-       image 'maven:3.6.0-jdk-8-alpine'
-       args '-v /root/.m2/repository:/root/.m2/repository'
-       // to use the same node and workdir defined on top-level pipeline for all docker agents
-       reuseNode true
-      }
-     }
+     
      steps {
       sh ' mvn clean compile'
      }
     }
     stage('CheckStyle') {
-     agent {
-      docker {
-       image 'maven:3.6.0-jdk-8-alpine'
-       args '-v /root/.m2/repository:/root/.m2/repository'
-       reuseNode true
-      }
-     }
+     
      steps {
       sh ' mvn checkstyle:checkstyle'
       step([$class: 'CheckStylePublisher',
@@ -63,13 +50,7 @@ pipeline {
    when {
     anyOf { branch 'master'; branch 'develop' }
    }
-   agent {
-    docker {
-     image 'maven:3.6.0-jdk-8-alpine'
-     args '-v /root/.m2/repository:/root/.m2/repository'
-     reuseNode true
-    }
-   }
+   
    steps {
     sh 'mvn test'
    }
@@ -83,13 +64,7 @@ pipeline {
    when {
     anyOf { branch 'master'; branch 'develop' }
    }
-   agent {
-    docker {
-     image 'maven:3.6.0-jdk-8-alpine'
-     args '-v /root/.m2/repository:/root/.m2/repository'
-     reuseNode true
-    }
-   }
+   
    steps {
     sh 'mvn verify -Dsurefire.skip=true'
    }
@@ -108,13 +83,7 @@ pipeline {
   stage('Code Quality Analysis') {
    parallel {
     stage('PMD') {
-     agent {
-      docker {
-       image 'maven:3.6.0-jdk-8-alpine'
-       args '-v /root/.m2/repository:/root/.m2/repository'
-       reuseNode true
-      }
-     }
+     
      steps {
       sh ' mvn pmd:pmd'
       // using pmd plugin
@@ -122,13 +91,7 @@ pipeline {
      }
     }
     stage('Findbugs') {
-     agent {
-      docker {
-       image 'maven:3.6.0-jdk-8-alpine'
-       args '-v /root/.m2/repository:/root/.m2/repository'
-       reuseNode true
-      }
-     }
+     
      steps {
       sh ' mvn findbugs:findbugs'
       // using findbugs plugin
@@ -136,26 +99,14 @@ pipeline {
      }
     }
     stage('JavaDoc') {
-     agent {
-      docker {
-       image 'maven:3.6.0-jdk-8-alpine'
-       args '-v /root/.m2/repository:/root/.m2/repository'
-       reuseNode true
-      }
-     }
+     
      steps {
       sh ' mvn javadoc:javadoc'
       step([$class: 'JavadocArchiver', javadocDir: './target/site/apidocs', keepAll: 'true'])
      }
     }
     stage('SonarQube') {
-     agent {
-      docker {
-       image 'maven:3.6.0-jdk-8-alpine'
-       args "-v /root/.m2/repository:/root/.m2/repository"
-       reuseNode true
-      }
-     }
+     
      steps {
       sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT"
      }
@@ -220,12 +171,7 @@ pipeline {
    when {
     anyOf { branch 'master'; branch 'develop' }
    }
-   agent {
-    docker {
-     image 'ahmed24khaled/ansible-management'
-     reuseNode true
-    }
-   }
+   
    steps {
     script {
 
