@@ -77,14 +77,7 @@ pipeline {
       step([$class: 'PmdPublisher', pattern: '**/target/pmd.xml'])
      }
     }
-    stage('Findbugs') {
-     
-     steps {
-      sh ' mvn findbugs:findbugs'
-      // using findbugs plugin
-      findbugs pattern: '**/target/findbugsXml.xml'
-     }
-    }
+    
     stage('JavaDoc') {
      
      steps {
