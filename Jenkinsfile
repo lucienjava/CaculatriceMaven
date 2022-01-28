@@ -6,7 +6,7 @@ pipeline {
     to obtains this address : $ docker-machine ip
     Linux: set localhost to SONARQUBE_URL
   */
-        SONARQUBE_URL = "http://192.168.99.100"
+        SONARQUBE_URL = "http://test.jenkins.org"
         SONARQUBE_PORT = "9000"
     }
     tools {
@@ -88,7 +88,7 @@ pipeline {
     stage('SonarQube') {
      
      steps {
-      sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT"
+      sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT -Dsonar.login=e46f5a340d34dccd6ed62535241fb46b679848cb"
      }
     }
    }
